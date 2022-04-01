@@ -24,7 +24,14 @@
 -- Some Variables.
 --------------------------------------------------------------------------------
 
-:R "..\CentralSecurityService.Common.Database.Definitions.sql"
+:SETVAR DatabaseVersionMajor             1
+:SETVAR DatabaseVersionMinor             0
+:SETVAR DatabaseVersionPatch             0
+:SETVAR DatabaseVersionBuild            "0"
+
+:SETVAR CommonDatabaseSqlFolder         "B:\Projects\CentralSecurityService\CentralSecurityService-Common-Sql-Source\Sql"
+
+:R $(CommonDatabaseSqlFolder)"\CentralSecurityService.Common.Database.Definitions.sql"
 
 --------------------------------------------------------------------------------
 -- Drop Tables.
