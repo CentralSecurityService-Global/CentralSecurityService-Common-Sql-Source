@@ -30,9 +30,9 @@
 :SETVAR DatabaseVersionBuild            "0"
 :SETVAR DatabaseVersionDescription      "Initial Database Created."
 
-:SETVAR CommonDatabaseSqlFolder         "B:\Projects\CentralSecurityService\CentralSecurityService-Common-Sql-Source\Sql"
+:SETVAR CommonSqlFolder         "B:\Projects\CentralSecurityService\CentralSecurityService-Common-Sql-Source\Sql"
 
-:R $(CommonDatabaseSqlFolder)"\CentralSecurityService.Common.Database.Definitions.sql"
+:R $(CommonSqlFolder)"\CentralSecurityService.Common.Database.Definitions.sql"
 
 --------------------------------------------------------------------------------
 -- Begin.
@@ -51,9 +51,9 @@ GO
 -- Create Schema if/as appropriate.
 --------------------------------------------------------------------------------
 
-IF SCHEMA_ID(N'$(CommonDatabaseSchema)') IS NULL
+IF SCHEMA_ID(N'$(CommonSchema)') IS NULL
 BEGIN
-    EXECUTE(N'CREATE SCHEMA $(CommonDatabaseSchema);');
+    EXECUTE(N'CREATE SCHEMA $(CommonSchema);');
 END
 GO
 
@@ -71,22 +71,22 @@ GO
 -- Create Tables if/as appropriate.
 --------------------------------------------------------------------------------
 
-IF OBJECT_ID(N'$(CommonDatabaseSchema).DatabaseVersions', N'U') IS NULL
+IF OBJECT_ID(N'$(CommonSchema).DatabaseVersions', N'U') IS NULL
 BEGIN
     PRINT N'Creating the DatabaseVersions Table.';
 
-    CREATE TABLE $(CommonDatabaseSchema).DatabaseVersions
+    CREATE TABLE $(CommonSchema).DatabaseVersions
     (
-        DatabaseVersionId           Int NOT NULL CONSTRAINT PK_$(CommonDatabaseSchema)_DatabaseVersions PRIMARY KEY IDENTITY(0, 1),
+        DatabaseVersionId           Int NOT NULL CONSTRAINT PK_$(CommonSchema)_DatabaseVersions PRIMARY KEY IDENTITY(0, 1),
         Major                       Int NOT NULL,
         Minor                       Int NOT NULL,
         Patch                       Int NOT NULL,
         Build                       NVarChar(128) NOT NULL,
         Description                 NVarChar(256) NOT NULL,
-        CreatedDateTimeUtc          DateTime2(7) NOT NULL CONSTRAINT DF_$(CommonDatabaseSchema)_DatabaseVersions_CreatedDateTimeUtc DEFAULT GetUtcDate(),
+        CreatedDateTimeUtc          DateTime2(7) NOT NULL CONSTRAINT DF_$(CommonSchema)_DatabaseVersions_CreatedDateTimeUtc DEFAULT GetUtcDate(),
         LastUpdatedDateTimeUtc      DateTime2(7) NULL,
         
-        CONSTRAINT UQ_$(CommonDatabaseSchema)_DatabaseVersions_Version UNIQUE (Major, Minor, Patch, Build)
+        CONSTRAINT UQ_$(CommonSchema)_DatabaseVersions_Version UNIQUE (Major, Minor, Patch, Build)
     );
 
 END
@@ -104,19 +104,19 @@ GO
 
 --------------------------------------------------------------------------------
 
-IF OBJECT_ID(N'$(CommonDatabaseSchema).Applications', N'U') IS NULL
+IF OBJECT_ID(N'$(CommonSchema).Applications', N'U') IS NULL
 BEGIN
     PRINT N'Creating the Applications Table.';
 
-    CREATE TABLE $(CommonDatabaseSchema).Applications
+    CREATE TABLE $(CommonSchema).Applications
     (
-        ApplicationId               Int NOT NULL CONSTRAINT PK_$(CommonDatabaseSchema)_Applications PRIMARY KEY,
+        ApplicationId               Int NOT NULL CONSTRAINT PK_$(CommonSchema)_Applications PRIMARY KEY,
         Name                        NVarChar(128) NOT NULL,
-        CreatedDateTimeUtc          DateTime2(7) NOT NULL CONSTRAINT DF_$(CommonDatabaseSchema)_Applications_CreatedDateTimeUtc DEFAULT GetUtcDate(),
+        CreatedDateTimeUtc          DateTime2(7) NOT NULL CONSTRAINT DF_$(CommonSchema)_Applications_CreatedDateTimeUtc DEFAULT GetUtcDate(),
         LastUpdatedDateTimeUtc      DateTime2(7) NULL
     );
 
-    INSERT INTO $(CommonDatabaseSchema).Applications
+    INSERT INTO $(CommonSchema).Applications
         (ApplicationId, Name)
     VALUES
         (  $(CentralSecurityServiceAdministrationWebSiteApplicationId), N'Central Security Service Administration Web Site'),
@@ -138,11 +138,11 @@ GO
 -- Insert the Database Version.
 --------------------------------------------------------------------------------
 
-IF NOT EXISTS (SELECT 1 FROM $(CommonDatabaseSchema).DatabaseVersions WHERE Major = $(DatabaseVersionMajor) AND Minor = $(DatabaseVersionMinor) AND Patch = $(DatabaseVersionPatch) AND Build = N'$(DatabaseVersionBuild)')
+IF NOT EXISTS (SELECT 1 FROM $(CommonSchema).DatabaseVersions WHERE Major = $(DatabaseVersionMajor) AND Minor = $(DatabaseVersionMinor) AND Patch = $(DatabaseVersionPatch) AND Build = N'$(DatabaseVersionBuild)')
 BEGIN
     PRINT N'Inserting the Database Version.';
 
-    INSERT INTO $(CommonDatabaseSchema).DatabaseVersions
+    INSERT INTO $(CommonSchema).DatabaseVersions
         (Major, Minor, Patch, Build, Description)
     VALUES
         ($(DatabaseVersionMajor), $(DatabaseVersionMinor), $(DatabaseVersionPatch), N'$(DatabaseVersionBuild)', N'$(DatabaseVersionDescription)');

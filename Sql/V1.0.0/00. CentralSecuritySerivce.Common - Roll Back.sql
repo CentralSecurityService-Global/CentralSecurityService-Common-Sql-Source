@@ -29,24 +29,31 @@
 :SETVAR DatabaseVersionPatch             0
 :SETVAR DatabaseVersionBuild            "0"
 
-:SETVAR CommonDatabaseSqlFolder         "B:\Projects\CentralSecurityService\CentralSecurityService-Common-Sql-Source\Sql"
+:SETVAR CommonSqlFolder         "B:\Projects\CentralSecurityService\CentralSecurityService-Common-Sql-Source\Sql"
 
-:R $(CommonDatabaseSqlFolder)"\CentralSecurityService.Common.Database.Definitions.sql"
+:R $(CommonSqlFolder)"\CentralSecurityService.Common.Database.Definitions.sql"
 
 --------------------------------------------------------------------------------
 -- Drop Tables.
 --------------------------------------------------------------------------------
 
-DROP TABLE IF EXISTS $(CommonDatabaseSchema).Applications;
+DROP TABLE IF EXISTS $(CommonSchema).Applications;
 
--- NOTE: In Future Versions *ONLY* DELETE the relevant Database Version Entry and leave the Table otherwise intact.
-DROP TABLE IF EXISTS $(CommonDatabaseSchema).DatabaseVersions;
+IF OBJECT_ID(N'$(CommonSchema).DatabaseVersions', N'U') IS NOT NULL
+BEGIN
+    DELETE FROM $(CommonSchema).DatabaseVersions
+    WHERE Major = $(DatabaseVersionMajor) AND Minor = $(DatabaseVersionMinor) AND Patch = $(DatabaseVersionPatch) AND Build = N'$(DatabaseVersionBuild)';
+END
+GO
+
+-- NOTE: In Future Versions *ONLY* DELETE the relevant Database Version Row and leave the Table otherwise intact.
+DROP TABLE IF EXISTS $(CommonSchema).DatabaseVersions;
 
 --------------------------------------------------------------------------------
 -- Drop Schema if/as appropriate.
 --------------------------------------------------------------------------------
 
-DROP SCHEMA IF EXISTS $(CommonDatabaseSchema);
+DROP SCHEMA IF EXISTS $(CommonSchema);
 
 --------------------------------------------------------------------------------
 

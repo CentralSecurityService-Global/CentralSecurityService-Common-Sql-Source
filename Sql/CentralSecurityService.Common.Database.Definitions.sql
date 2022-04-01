@@ -20,7 +20,7 @@
 --
 --------------------------------------------------------------------------------
 
-:SETVAR CommonDatabaseSchema		"Dad"
+:SETVAR CommonSchema            "Dad"
 
 :SETVAR CentralSecurityServiceAdministrationWebSiteApplicationId         0
 :SETVAR CentralSecurityServiceWebSiteApplicationId                       1
