@@ -53,7 +53,7 @@ GO
 
 IF SCHEMA_ID(N'$(CommonSchema)') IS NULL
 BEGIN
-	PRINT N'Creating the Schema.';
+    PRINT N'Creating the Schema.';
 
     EXECUTE(N'CREATE SCHEMA $(CommonSchema);');
 END
