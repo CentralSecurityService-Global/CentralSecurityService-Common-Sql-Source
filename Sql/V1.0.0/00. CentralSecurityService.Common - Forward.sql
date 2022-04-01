@@ -120,8 +120,8 @@ BEGIN
     INSERT INTO $(CommonSchema).Applications
         (ApplicationId, Name)
     VALUES
-        (  $(CentralSecurityServiceAdministrationWebSiteApplicationId), N'Central Security Service Administration Web Site'),
-        (  $(CentralSecurityServiceWebSiteApplicationId),               N'Central Security Service Web Site');
+        ($(CentralSecurityServiceAdministrationWebSiteApplicationId), N'Central Security Service Administration Web Site'),
+        ($(CentralSecurityServiceWebSiteApplicationId),               N'Central Security Service Web Site');
 END
 GO
 
