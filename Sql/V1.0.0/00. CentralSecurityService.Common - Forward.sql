@@ -70,12 +70,12 @@ IF OBJECT_ID(N'$(CommonDatabaseSchema).DatabaseVersions', N'U') IS NULL
 BEGIN
     CREATE TABLE $(CommonDatabaseSchema).DatabaseVersions
     (
-        DatabaseVersionId			Int NOT NULL CONSTRAINT PK_$(CommonDatabaseSchema)_DatabaseVersions PRIMARY KEY IDENTITY(0, 1),
-		Major						Int NOT NULL,
-		Minor						Int NOT NULL,
-		Patch						Int NOT NULL,
-		Build						NVarChar(128) NOT NULL,
-		Description					NVarChar(256) NOT NULL,
+        DatabaseVersionId           Int NOT NULL CONSTRAINT PK_$(CommonDatabaseSchema)_DatabaseVersions PRIMARY KEY IDENTITY(0, 1),
+        Major                       Int NOT NULL,
+        Minor                       Int NOT NULL,
+        Patch                       Int NOT NULL,
+        Build                       NVarChar(128) NOT NULL,
+        Description                 NVarChar(256) NOT NULL,
         CreatedDateTimeUtc          DateTime2(7) NOT NULL CONSTRAINT DF_$(CommonDatabaseSchema)_DatabaseVersions_CreatedDateTimeUtc DEFAULT GetUtcDate(),
         LastUpdatedDateTimeUtc      DateTime2(7) NULL
     );
@@ -112,7 +112,7 @@ BEGIN
         (ApplicationId, Name)
     VALUES
         (  $(CentralSecurityServiceAdministrationWebSiteApplicationId), N'Central Security Service Administration Web Site'),
-        (  $(CentralSecurityServiceWebSiteApplicationId), 				N'Central Security Service Web Site');
+        (  $(CentralSecurityServiceWebSiteApplicationId),               N'Central Security Service Web Site');
 END
 GO
 
@@ -134,9 +134,9 @@ PRINT N'Inserting the Database Version.';
 GO
 
 INSERT INTO $(CommonDatabaseSchema).DatabaseVersions
-	(Major, Minor, Patch, Build, Description)
+    (Major, Minor, Patch, Build, Description)
 VALUES
-	(1, 0, 0, N'0', N'Initial Database Created.');
+    (1, 0, 0, N'0', N'Initial Database Created.');
 GO
 
 DECLARE @Error AS Int = @@ERROR;
