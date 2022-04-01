@@ -16,7 +16,7 @@
 --
 --  1.  This Sql file may be run as is or may be included via another Sql File along the lines of:
 --
---          :R "\Projects\CentralSecurityService\CentralSecurityService-Common-Sql-Source\Sql\V1.0.0\00. CentralSecurityService.Common - Forward.sql"
+--          :R "B:\Projects\CentralSecurityService\CentralSecurityService-Common-Sql-Source\Sql\V1.0.0\00. CentralSecurityService.Common - Forward.sql"
 --
 --------------------------------------------------------------------------------
 
@@ -53,6 +53,8 @@ GO
 
 IF SCHEMA_ID(N'$(CommonSchema)') IS NULL
 BEGIN
+	PRINT N'Creating the Schema.';
+
     EXECUTE(N'CREATE SCHEMA $(CommonSchema);');
 END
 GO
@@ -88,7 +90,6 @@ BEGIN
         
         CONSTRAINT UQ_$(CommonSchema)_DatabaseVersions_Version UNIQUE (Major, Minor, Patch, Build)
     );
-
 END
 GO
 

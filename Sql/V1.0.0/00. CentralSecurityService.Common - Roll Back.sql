@@ -16,7 +16,7 @@
 --
 --  1.  This Sql file may be run as is or may be included via another Sql File along the lines of:
 --
---          :R "\Projects\CentralSecurityService\CentralSecurityService-Common-Sql-Source\Sql\V1.0.0\00. CentralSecuritySerivce.Common - Roll Back.sql"
+--          :R "B:\Projects\CentralSecurityService\CentralSecurityService-Common-Sql-Source\Sql\V1.0.0\00. CentralSecuritySerivce.Common - Roll Back.sql"
 --
 --------------------------------------------------------------------------------
 
